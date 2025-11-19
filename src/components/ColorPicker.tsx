@@ -17,25 +17,28 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       <div className="flex items-center justify-between">
-        <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100">
-          Color
+        <label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wide uppercase">
+          Color Control
         </label>
         <button
           onClick={() => onChange(getRandomHex())}
-          className="text-xs font-medium flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+          className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
         >
-          <Shuffle className="w-3.5 h-3.5" />
-          Randomize
+          <Shuffle className="w-3.5 h-3.5 text-gray-600 dark:text-gray-300 group-hover:rotate-180 transition-transform duration-500" />
+          <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Randomize</span>
         </button>
       </div>
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-6">
         {/* Input and Color Picker */}
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           <div className="relative flex-1 group">
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border border-gray-200 shadow-sm" style={{ backgroundColor: color }} />
+            <div 
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg border border-black/5 dark:border-white/10 shadow-sm transition-transform duration-300 group-hover:scale-110" 
+              style={{ backgroundColor: color }} 
+            />
             <input
               type="text"
               value={color.toUpperCase()}
@@ -45,12 +48,12 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
                   onChange(`#${val}`);
                 }
               }}
-              className="w-full pl-10 pr-10 py-3 border border-gray-200 dark:border-gray-700 rounded-2xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-mono text-lg uppercase tracking-wider text-gray-700 dark:text-gray-200"
+              className="w-full pl-14 pr-12 py-4 border border-gray-200 dark:border-gray-700 rounded-2xl bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10 focus:border-gray-300 dark:focus:border-gray-600 transition-all font-mono text-lg font-medium uppercase tracking-widest text-gray-900 dark:text-white placeholder-gray-400"
               placeholder="#000000"
             />
             <button
               onClick={handleCopy}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-xl hover:bg-white dark:hover:bg-gray-700 transition-all duration-200"
               title="Copy Hex Code"
             >
               {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
@@ -64,28 +67,30 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
               onChange={(e) => onChange(e.target.value)}
               className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
             />
-            <div className="w-[52px] h-[52px] rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center shadow-sm hover:border-blue-500 transition-colors">
-               <Pipette className="w-5 h-5 text-gray-500" />
+            <div className="w-[60px] h-full rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-white dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 group">
+               <Pipette className="w-5 h-5 text-gray-500 group-hover:scale-110 transition-transform" />
             </div>
           </div>
         </div>
 
         {/* Presets */}
         <div>
-          <span className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 block uppercase tracking-wider">Curated Palette</span>
           <div className="grid grid-cols-6 sm:grid-cols-8 gap-3">
             {MORANDI_COLORS.map((c) => (
               <button
                 key={c}
                 onClick={() => onChange(c)}
-                className="aspect-square rounded-full border border-black/5 dark:border-white/10 hover:scale-110 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 relative group"
-                style={{ backgroundColor: c }}
+                className="group relative aspect-square rounded-xl transition-all duration-300 focus:outline-none"
                 aria-label={`Select color ${c}`}
               >
+                <div 
+                  className="absolute inset-0 rounded-xl border border-black/5 dark:border-white/5 shadow-sm group-hover:scale-110 group-hover:shadow-md transition-all duration-300"
+                  style={{ backgroundColor: c }}
+                />
                 {color.toLowerCase() === c.toLowerCase() && (
-                   <span className="absolute inset-0 flex items-center justify-center">
-                     <div className="w-2 h-2 bg-white rounded-full shadow-sm ring-1 ring-black/5" />
-                   </span>
+                  <div className="absolute inset-0 z-10 flex items-center justify-center scale-110">
+                    <div className="w-2.5 h-2.5 bg-white rounded-full shadow-sm ring-1 ring-black/10 animate-in zoom-in duration-200" />
+                  </div>
                 )}
               </button>
             ))}
