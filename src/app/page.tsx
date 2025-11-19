@@ -1,21 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Download } from "lucide-react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PreviewCanvas from "@/components/PreviewCanvas";
 import ColorPicker from "@/components/ColorPicker";
 import SizeControl from "@/components/SizeControl";
+import NoiseControl from "@/components/NoiseControl";
 import { downloadSolidColor } from "@/lib/utils";
 
-export default function Home() {
-  const [color, setColor] = useState<string>("#9BB0C1");
-  const [width, setWidth] = useState<number>(1170);
-  const [height, setHeight] = useState<number>(2532);
+function ColorGenerator() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Initialize state from URL or defaults
+  const [color, setColor] = useState<string>(searchParams.get("color") || "#9BB0C1");
+  const [width, setWidth] = useState<number>(() => {
+    const w = searchParams.get("width");
+    return w ? parseInt(w) : 1170;
+  });
+  const [height, setHeight] = useState<number>(() => {
+    const h = searchParams.get("height");
+    return h ? parseInt(h) : 2532;
+  });
+  const [noise, setNoise] = useState<number>(() => {
+    const n = searchParams.get("noise");
+    return n ? parseInt(n) : 0;
+  });
+
+  // Sync state to URL
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    
+    // Update params
+    if (color) params.set("color", color);
+    if (width) params.set("width", width.toString());
+    if (height) params.set("height", height.toString());
+    if (noise > 0) params.set("noise", noise.toString());
+    else params.delete("noise");
+    
+    // Replace URL without reloading
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [color, width, height, noise, pathname, router, searchParams]);
 
   const handleDownload = () => {
-    downloadSolidColor(color, width, height);
+    downloadSolidColor(color, width, height, noise);
   };
 
   return (
@@ -33,7 +65,7 @@ export default function Home() {
         {/* Left: Preview Section - Sticky on Desktop */}
         <section className="md:sticky md:top-24">
           <div className="bg-white/50 dark:bg-black/20 backdrop-blur-sm rounded-3xl p-6 shadow-sm border border-white/50 dark:border-white/10">
-            <PreviewCanvas color={color} width={width} height={height} />
+            <PreviewCanvas color={color} width={width} height={height} noise={noise} />
           </div>
         </section>
 
@@ -52,6 +84,10 @@ export default function Home() {
                 setHeight(h);
               }} 
             />
+
+            <hr className="border-gray-200 dark:border-gray-800" />
+
+            <NoiseControl value={noise} onChange={setNoise} />
             
             <button
               onClick={handleDownload}
@@ -65,5 +101,13 @@ export default function Home() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <ColorGenerator />
+    </Suspense>
   );
 }
