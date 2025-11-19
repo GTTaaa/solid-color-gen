@@ -17,7 +17,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
   };
 
   return (
-    <div className="space-y-7">
+    <div className="space-y-5 lg:space-y-7">
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wide uppercase">
           Color Control
@@ -31,7 +31,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
         </button>
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-5 lg:gap-6">
         {/* Input and Color Picker */}
         <div className="flex gap-4">
           <div className="relative flex-1 group">
@@ -48,7 +48,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
                   onChange(`#${val}`);
                 }
               }}
-              className="w-full pl-14 pr-12 py-4 border border-gray-200 dark:border-gray-700 rounded-2xl bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10 focus:border-gray-300 dark:focus:border-gray-600 transition-all font-mono text-lg font-medium uppercase tracking-widest text-gray-900 dark:text-white placeholder-gray-400"
+              className="w-full pl-14 pr-12 py-3 lg:py-4 border border-gray-200 dark:border-gray-700 rounded-2xl bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10 focus:border-gray-300 dark:focus:border-gray-600 transition-all font-mono text-lg font-medium uppercase tracking-widest text-gray-900 dark:text-white placeholder-gray-400"
               placeholder="#000000"
             />
             <button
