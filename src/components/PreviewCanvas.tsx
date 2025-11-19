@@ -6,28 +6,36 @@ interface PreviewCanvasProps {
 
 export default function PreviewCanvas({ color, width, height }: PreviewCanvasProps) {
   return (
-    <div className="w-full aspect-square bg-gray-100 dark:bg-gray-900 rounded-xl overflow-hidden flex items-center justify-center relative border border-gray-200 dark:border-gray-800 shadow-inner">
-      {/* Background pattern for transparency (optional, but good for context) */}
-      <div className="absolute inset-0 opacity-20" style={{ 
-        backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', 
-        backgroundSize: '10px 10px' 
-      }} />
+    <div className="w-full aspect-square flex items-center justify-center relative">
       
-      {/* Preview Box - Scaled down to fit */}
+      {/* Preview Box */}
       <div 
-        className="relative shadow-lg transition-colors duration-200"
+        className="relative transition-all duration-500 ease-out group"
         style={{
-          backgroundColor: color,
           aspectRatio: `${width}/${height}`,
-          height: width > height ? 'auto' : '70%',
-          width: width > height ? '70%' : 'auto',
-          maxHeight: '80%',
-          maxWidth: '80%'
+          height: width > height ? 'auto' : '85%',
+          width: width > height ? '85%' : 'auto',
+          maxHeight: '100%',
+          maxWidth: '100%'
         }}
       >
-        {/* Dimensions Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/20 text-white text-xs font-mono">
-          {width}x{height}
+        {/* Main Color Surface */}
+        <div 
+          className="absolute inset-0 rounded-3xl shadow-2xl transition-all duration-500"
+          style={{
+            backgroundColor: color,
+            boxShadow: `0 20px 60px -10px ${color}60, 0 10px 30px -5px rgba(0,0,0,0.1)`
+          }}
+        />
+
+        {/* Reflection/Gloss effect */}
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-white/20 to-transparent opacity-50 pointer-events-none" />
+
+        {/* Dimensions Overlay - Always visible on hover, but subtle */}
+        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          <div className="bg-gray-900/80 backdrop-blur-md text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-lg whitespace-nowrap">
+            {width} × {height}
+          </div>
         </div>
       </div>
     </div>
