@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
 export const metadata: Metadata = {
-  title: "ColorTools",
-  description: "Generate solid color backgrounds for mobile and desktop",
+  title: "Solid Color - Premium Background Generator",
+  description: "Create stunning solid color backgrounds with noise textures.",
 };
 
 export default function RootLayout({
@@ -13,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col selection:bg-gray-900 selection:text-white dark:selection:bg-white dark:selection:text-black`} suppressHydrationWarning>
         {children}
       </body>
     </html>
