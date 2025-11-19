@@ -71,9 +71,8 @@ export const MORANDI_COLORS = [
 ];
 
 export const PRESET_SIZES = [
-  { label: 'iPhone Wallpaper', width: 1170, height: 2532 },
-  { label: 'Instagram Square', width: 1080, height: 1080 },
-  { label: 'Instagram Story', width: 1080, height: 1920 },
-  { label: 'Twitter Post', width: 1200, height: 675 },
-  { label: 'FHD Wallpaper', width: 1920, height: 1080 },
+  { label: 'iPhone', width: 1170, height: 2532 },     // Mobile
+  { label: 'Story', width: 1080, height: 1920 },      // Social Media Vertical
+  { label: 'Square', width: 1080, height: 1080 },     // Social Media Square
+  { label: 'Desktop', width: 1920, height: 1080 },    // Desktop / Video
 ];

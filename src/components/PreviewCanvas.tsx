@@ -11,7 +11,7 @@ export default function PreviewCanvas({ color, width, height, noise }: PreviewCa
       
       {/* Preview Box */}
       <div 
-        className="relative transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) group"
+        className="relative transition-[background-color,box-shadow,border-radius] duration-700 cubic-bezier(0.4, 0, 0.2, 1) group"
         style={{
           aspectRatio: `${width}/${height}`,
           height: width > height ? 'auto' : '100%',

@@ -45,7 +45,7 @@ export default function SizeControl({ width, height, onChange }: SizeControlProp
       {/* Preset Sizes */}
       <div>
         <span className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 block uppercase tracking-wider ml-1">Quick Presets</span>
-        <div className="flex flex-wrap gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {PRESET_SIZES.map((size) => {
             const isActive = width === size.width && height === size.height;
             return (
@@ -53,7 +53,7 @@ export default function SizeControl({ width, height, onChange }: SizeControlProp
                 key={size.label}
                 onClick={() => onChange(size.width, size.height)}
                 className={`
-                  px-4 py-3 text-sm rounded-xl font-medium transition-all duration-200 flex items-center gap-2.5 border relative overflow-hidden group
+                  px-3 py-3 text-sm rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 border relative overflow-hidden group
                   ${isActive 
                     ? 'bg-gray-900 text-white border-gray-900 dark:bg-white dark:text-black dark:border-white shadow-md' 
                     : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50 dark:bg-gray-800/50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:border-gray-600'
@@ -61,10 +61,10 @@ export default function SizeControl({ width, height, onChange }: SizeControlProp
                 `}
               >
                 {/* Simple icon logic based on label keywords */}
-                {size.label.toLowerCase().includes('phone') ? <Smartphone className={`w-4 h-4 ${isActive ? 'opacity-100' : 'opacity-70'}`} /> :
-                 size.label.toLowerCase().includes('instagram') ? <Instagram className={`w-4 h-4 ${isActive ? 'opacity-100' : 'opacity-70'}`} /> :
+                {size.label.toLowerCase().includes('iphone') ? <Smartphone className={`w-4 h-4 ${isActive ? 'opacity-100' : 'opacity-70'}`} /> :
+                 (size.label.toLowerCase().includes('story') || size.label.toLowerCase().includes('square')) ? <Instagram className={`w-4 h-4 ${isActive ? 'opacity-100' : 'opacity-70'}`} /> :
                  <Monitor className={`w-4 h-4 ${isActive ? 'opacity-100' : 'opacity-70'}`} />}
-                <span>{size.label}</span>
+                <span className="truncate">{size.label}</span>
               </button>
             );
           })}
