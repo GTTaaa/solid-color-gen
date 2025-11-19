@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SolidColorGen",
+  title: "ColorTools",
   description: "Generate solid color backgrounds for mobile and desktop",
 };
 

@@ -23,6 +23,10 @@ export function downloadSolidColor(hex: string, width: number, height: number) {
   }
 }
 
+export function getRandomHex(): string {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
+}
+
 export const MORANDI_COLORS = [
   '#B6B5A6', '#9A9B91', '#7E8077', '#6C6E66', // Greys
   '#D3C0B2', '#C0A89D', '#B19488', '#9D8175', // Browns

@@ -6,7 +6,7 @@ export default function Header() {
       <div className="flex items-center gap-2">
         <Palette className="w-6 h-6 text-blue-600 dark:text-blue-400" />
         <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          SolidColorGen
+          ColorTools
         </h1>
       </div>
     </header>
