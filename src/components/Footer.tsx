@@ -1,7 +1,9 @@
 export default function Footer() {
   return (
-    <footer className="w-full p-4 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
-      <p>© {new Date().getFullYear()} ColorTools. Built for creators.</p>
+    <footer className="w-full py-8 text-center relative z-10">
+      <p className="text-sm text-gray-400 dark:text-gray-600 font-medium tracking-wide">
+        © {new Date().getFullYear()} Solid Color. Crafted for creators.
+      </p>
     </footer>
   );
 }

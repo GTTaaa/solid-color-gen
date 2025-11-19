@@ -1,5 +1,5 @@
 import { MORANDI_COLORS, getRandomHex } from "@/lib/utils";
-import { Shuffle, Copy, Check } from "lucide-react";
+import { Shuffle, Copy, Check, Pipette } from "lucide-react";
 import { useState } from "react";
 
 interface ColorPickerProps {
@@ -17,71 +17,80 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-7">
       <div className="flex items-center justify-between">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Color Selection
+        <label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wide uppercase">
+          Color Control
         </label>
         <button
           onClick={() => onChange(getRandomHex())}
-          className="text-xs flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
         >
-          <Shuffle className="w-3 h-3" />
-          Randomize
+          <Shuffle className="w-3.5 h-3.5 text-gray-600 dark:text-gray-300 group-hover:rotate-180 transition-transform duration-500" />
+          <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Randomize</span>
         </button>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         {/* Input and Color Picker */}
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <div className="relative flex-1 group">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-mono">#</span>
+            <div 
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg border border-black/5 dark:border-white/10 shadow-sm transition-transform duration-300 group-hover:scale-110" 
+              style={{ backgroundColor: color }} 
+            />
             <input
               type="text"
-              value={color.replace('#', '')}
+              value={color.toUpperCase()}
               onChange={(e) => {
-                const val = e.target.value;
+                const val = e.target.value.replace('#', '');
                 if (/^[0-9A-Fa-f]{0,6}$/.test(val)) {
                   onChange(`#${val}`);
                 }
               }}
-              className="w-full pl-7 pr-10 py-2 border border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-mono uppercase"
-              placeholder="Hex Code"
+              className="w-full pl-14 pr-12 py-4 border border-gray-200 dark:border-gray-700 rounded-2xl bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10 focus:border-gray-300 dark:focus:border-gray-600 transition-all font-mono text-lg font-medium uppercase tracking-widest text-gray-900 dark:text-white placeholder-gray-400"
+              placeholder="#000000"
             />
             <button
               onClick={handleCopy}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-xl hover:bg-white dark:hover:bg-gray-700 transition-all duration-200"
               title="Copy Hex Code"
             >
               {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>
-          <div className="relative w-[44px] h-[44px] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm shrink-0">
+          
+          <div className="relative shrink-0">
              <input
               type="color"
               value={color.length === 7 ? color : '#000000'}
               onChange={(e) => onChange(e.target.value)}
-              className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] p-0 cursor-pointer"
+              className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
             />
+            <div className="w-[60px] h-full rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-white dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 group">
+               <Pipette className="w-5 h-5 text-gray-500 group-hover:scale-110 transition-transform" />
+            </div>
           </div>
         </div>
 
         {/* Presets */}
         <div>
-          <span className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 block">Curated Colors</span>
-          <div className="grid grid-cols-8 gap-2">
+          <div className="grid grid-cols-6 sm:grid-cols-8 gap-3">
             {MORANDI_COLORS.map((c) => (
               <button
                 key={c}
                 onClick={() => onChange(c)}
-                className="aspect-square rounded-lg border border-black/5 dark:border-white/10 hover:scale-110 hover:z-10 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 relative group"
-                style={{ backgroundColor: c }}
+                className="group relative aspect-square rounded-xl transition-all duration-300 focus:outline-none"
                 aria-label={`Select color ${c}`}
               >
+                <div 
+                  className="absolute inset-0 rounded-xl border border-black/5 dark:border-white/5 shadow-sm group-hover:scale-110 group-hover:shadow-md transition-all duration-300"
+                  style={{ backgroundColor: c }}
+                />
                 {color.toLowerCase() === c.toLowerCase() && (
-                   <span className="absolute inset-0 flex items-center justify-center">
-                     <div className="w-1.5 h-1.5 bg-white rounded-full shadow-sm" />
-                   </span>
+                  <div className="absolute inset-0 z-10 flex items-center justify-center scale-110">
+                    <div className="w-2.5 h-2.5 bg-white rounded-full shadow-sm ring-1 ring-black/10 animate-in zoom-in duration-200" />
+                  </div>
                 )}
               </button>
             ))}

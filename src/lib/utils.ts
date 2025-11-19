@@ -1,19 +1,55 @@
-export function downloadSolidColor(hex: string, width: number, height: number) {
+export function downloadSolidColor(hex: string, width: number, height: number, noise: number = 0) {
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext('2d');
   
   if (ctx) {
+    // 1. Fill Base Color
     ctx.fillStyle = hex;
     ctx.fillRect(0, 0, width, height);
+    
+    // 2. Apply Noise
+    if (noise > 0) {
+      const patternSize = 200; // Small pattern to repeat
+      const noiseCanvas = document.createElement('canvas');
+      noiseCanvas.width = patternSize;
+      noiseCanvas.height = patternSize;
+      const noiseCtx = noiseCanvas.getContext('2d');
+      
+      if (noiseCtx) {
+        const imageData = noiseCtx.createImageData(patternSize, patternSize);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const val = Math.floor(Math.random() * 255);
+          data[i] = val;     // r
+          data[i + 1] = val; // g
+          data[i + 2] = val; // b
+          data[i + 3] = 255; // alpha
+        }
+        noiseCtx.putImageData(imageData, 0, 0);
+        
+        const pattern = ctx.createPattern(noiseCanvas, 'repeat');
+        if (pattern) {
+          ctx.globalCompositeOperation = 'overlay';
+          ctx.globalAlpha = (noise / 100) * 0.5; // Scale down intensity slightly for better visual match
+          ctx.fillStyle = pattern;
+          ctx.fillRect(0, 0, width, height);
+          
+          // Reset
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.globalAlpha = 1;
+        }
+      }
+    }
     
     canvas.toBlob((blob) => {
       if (blob) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `solid-${hex.replace('#', '')}-${width}x${height}.png`;
+        a.download = `solid-${hex.replace('#', '')}-${width}x${height}${noise > 0 ? '-noise' : ''}.png`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

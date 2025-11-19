@@ -2,11 +2,13 @@ import { Palette } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="w-full p-4 flex items-center justify-center border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 sticky top-0 z-10">
-      <div className="flex items-center gap-2">
-        <Palette className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-        <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          ColorTools
+    <header className="w-full py-8 flex items-center justify-center z-50 relative">
+      <div className="group flex items-center gap-3 px-6 py-3 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur-2xl border border-white/60 dark:border-white/10 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-500 ease-out cursor-default">
+        <div className="p-2 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black group-hover:rotate-12 transition-transform duration-500">
+          <Palette className="w-4 h-4" />
+        </div>
+        <h1 className="text-sm font-bold tracking-widest text-gray-900 dark:text-white uppercase opacity-90">
+          Solid Color
         </h1>
       </div>
     </header>
