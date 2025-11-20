@@ -26,7 +26,7 @@ export default function PreviewCanvas({ color, width, height, noise }: PreviewCa
           style={{
             backgroundColor: color,
             boxShadow: `
-              0 25px 50px -12px ${color}40,
+              0 25px 50px -12px rgba(0, 0, 0, 0.25),
               0 0 0 1px rgba(0,0,0,0.02)
             `
           }}
@@ -46,7 +46,7 @@ export default function PreviewCanvas({ color, width, height, noise }: PreviewCa
         
         {/* Depth Shadow underneath */}
         <div 
-          className="absolute -inset-4 md:-inset-8 -z-10 rounded-[2rem] md:rounded-[3rem] blur-2xl md:blur-3xl opacity-25 dark:opacity-20 transition-all duration-700"
+          className="absolute -inset-4 md:-inset-8 -z-10 rounded-[2rem] md:rounded-[3rem] blur-2xl md:blur-3xl opacity-40 dark:opacity-30 transition-all duration-700"
           style={{ backgroundColor: color }}
         />
 
