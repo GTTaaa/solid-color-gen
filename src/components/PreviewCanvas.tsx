@@ -46,8 +46,11 @@ export default function PreviewCanvas({ color, width, height, noise }: PreviewCa
         
         {/* Depth Shadow underneath */}
         <div 
-          className="absolute -inset-4 md:-inset-8 -z-10 rounded-[2rem] md:rounded-[3rem] blur-2xl md:blur-3xl opacity-40 dark:opacity-30 transition-all duration-700"
-          style={{ backgroundColor: color }}
+          className="absolute inset-0 -z-10 rounded-[1.5rem] md:rounded-[2rem] opacity-50 dark:opacity-40 transition-all duration-700"
+          style={{ 
+            boxShadow: `0 20px 60px -10px ${color}`,
+            transform: 'scale(0.9) translateZ(0)'
+          }}
         />
 
         {/* Dimensions Info */}
