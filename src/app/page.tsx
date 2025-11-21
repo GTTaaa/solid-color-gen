@@ -122,7 +122,7 @@ function ColorGenerator() {
               {/* Desktop: Show all. Mobile: Show active tab */}
               <div className={`${activeTab === 'color' ? 'block' : 'hidden'} lg:block animate-in fade-in slide-in-from-bottom-2 duration-300 lg:animate-none`}>
                 <ColorPicker color={color} onChange={setColor} />
-                <hr className="border-gray-100 dark:border-white/5 mt-6 lg:mt-10 lg:block hidden" />
+                {/* <hr className="border-gray-100 dark:border-white/5 mt-6 lg:mt-10 lg:block hidden" /> */}
               </div>
               
               <div className={`${activeTab === 'size' ? 'block' : 'hidden'} lg:block animate-in fade-in slide-in-from-bottom-2 duration-300 lg:animate-none`}>

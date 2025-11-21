@@ -74,7 +74,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
         </div>
 
         {/* Presets */}
-        <div>
+        {/* <div>
           <div className="grid grid-cols-6 sm:grid-cols-8 gap-3">
             {MORANDI_COLORS.map((c) => (
               <button
@@ -95,7 +95,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
