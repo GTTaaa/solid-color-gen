@@ -1,4 +1,4 @@
-import { MORANDI_COLORS, getRandomHex } from "@/lib/utils";
+import { ALL_PRESETS, getRandomHex } from "@/lib/utils";
 import { Shuffle, Copy, Check, Pipette } from "lucide-react";
 import { useState } from "react";
 
@@ -9,6 +9,7 @@ interface ColorPickerProps {
 
 export default function ColorPicker({ color, onChange }: ColorPickerProps) {
   const [copied, setCopied] = useState(false);
+  const [activePreset, setActivePreset] = useState<keyof typeof ALL_PRESETS>('trending');
 
   const handleCopy = () => {
     navigator.clipboard.writeText(color);
@@ -27,7 +28,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
           className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
         >
           <Shuffle className="w-3.5 h-3.5 text-gray-600 dark:text-gray-300 group-hover:rotate-180 transition-transform duration-500" />
-          <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Randomize</span>
+          <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Random</span>
         </button>
       </div>
 
@@ -35,10 +36,18 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
         {/* Input and Color Picker */}
         <div className="flex gap-4">
           <div className="relative flex-1 group">
-            <div 
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg border border-black/5 dark:border-white/10 shadow-sm transition-transform duration-300 group-hover:scale-110" 
-              style={{ backgroundColor: color }} 
-            />
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg border border-black/5 dark:border-white/10 shadow-sm overflow-hidden cursor-pointer transition-transform duration-300 group-hover:scale-110">
+              <div 
+                className="w-full h-full"
+                style={{ backgroundColor: color }} 
+              />
+              <input
+                type="color"
+                value={color.length === 7 ? color : '#000000'}
+                onChange={(e) => onChange(e.target.value)}
+                className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+              />
+            </div>
             <input
               type="text"
               value={color.toUpperCase()}
@@ -59,24 +68,28 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
               {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>
-          
-          <div className="relative shrink-0">
-             <input
-              type="color"
-              value={color.length === 7 ? color : '#000000'}
-              onChange={(e) => onChange(e.target.value)}
-              className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
-            />
-            <div className="w-[60px] h-full rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-white dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 group">
-               <Pipette className="w-5 h-5 text-gray-500 group-hover:scale-110 transition-transform" />
-            </div>
-          </div>
         </div>
 
         {/* Presets */}
-        {/* <div>
+        <div>
+          <div className="flex items-center gap-2 mb-3 overflow-x-auto pb-1 scrollbar-hide">
+            {(Object.keys(ALL_PRESETS) as Array<keyof typeof ALL_PRESETS>).map((key) => (
+              <button
+                key={key}
+                onClick={() => setActivePreset(key)}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 whitespace-nowrap ${
+                  activePreset === key
+                    ? 'bg-gray-900 text-white dark:bg-white dark:text-black'
+                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
+                }`}
+              >
+                {ALL_PRESETS[key].label}
+              </button>
+            ))}
+          </div>
+          
           <div className="grid grid-cols-6 sm:grid-cols-8 gap-3">
-            {MORANDI_COLORS.map((c) => (
+            {ALL_PRESETS[activePreset].colors.map((c) => (
               <button
                 key={c}
                 onClick={() => onChange(c)}
@@ -95,7 +108,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
               </button>
             ))}
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

@@ -144,7 +144,7 @@ function ColorGenerator() {
           </div>
           
           {/* Sticky Download Button Footer */}
-          <div className="shrink-0 p-6 pt-2 md:p-10 md:pt-0 lg:pt-0 bg-gradient-to-t from-white/95 via-white/90 to-transparent dark:from-[#111]/95 dark:via-[#111]/90 lg:bg-none z-20 relative">
+          <div className="shrink-0 p-6 pt-2 pb-8 md:p-10 md:pt-0 lg:pt-0 bg-gradient-to-t from-white/95 via-white/90 to-transparent dark:from-[#111]/95 dark:via-[#111]/90 lg:bg-none z-20 relative">
             <button
               onClick={handleDownload}
               className="group w-full py-4 lg:py-5 px-6 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl font-bold text-lg shadow-xl shadow-black/5 dark:shadow-white/5 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 flex items-center justify-center gap-3 overflow-hidden relative"

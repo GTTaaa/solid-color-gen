@@ -64,11 +64,25 @@ export function getRandomHex(): string {
 }
 
 export const MORANDI_COLORS = [
-  '#B6B5A6', '#9A9B91', '#7E8077', '#6C6E66', // Greys
-  '#D3C0B2', '#C0A89D', '#B19488', '#9D8175', // Browns
-  '#B5C3CC', '#9BB0C1', '#819DB5', '#6B8CA8', // Blues
-  '#D6D8C0', '#C4C8AC', '#B2B899', '#9FA886', // Greens
+  '#9BB0C1', '#B5C3CC', '#D3C0B2', '#C0A89D', // Soft Blues & Browns
+  '#B6B5A6', '#9A9B91', '#D6D8C0', '#C4C8AC', // Greys & Greens
 ];
+
+export const TRENDING_COLORS = [
+  '#FF6B6B', '#4ECDC4', '#FFE66D', '#1A535C', // Vibrant
+  '#F7FFF7', '#A8DADC', '#457B9D', '#1D3557', // Clean
+];
+
+export const Y2K_COLORS = [
+  '#FF00FF', '#00FFFF', '#FFFF00', '#FF0099', // Neon
+  '#CCFF00', '#9D00FF', '#FF6600', '#00FF66', // Cyber
+];
+
+export const ALL_PRESETS = {
+  trending: { label: 'Trending', colors: TRENDING_COLORS },
+  morandi: { label: 'Morandi', colors: MORANDI_COLORS },
+  y2k: { label: 'Y2K', colors: Y2K_COLORS },
+};
 
 export const PRESET_SIZES = [
   { label: 'iPhone', width: 1170, height: 2532 },     // Mobile
