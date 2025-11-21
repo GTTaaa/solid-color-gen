@@ -8,7 +8,7 @@ export default function Header() {
           <Palette className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
         </div>
         <h1 className="text-xs lg:text-sm font-bold tracking-widest text-gray-900 dark:text-white uppercase opacity-90">
-          Solid Color
+          Pure.
         </h1>
       </div>
     </header>

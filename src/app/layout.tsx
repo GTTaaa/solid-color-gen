@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Solid Color - Premium Background Generator",
+  title: "Pure. - Premium Background Generator",
   description: "Create stunning solid color backgrounds with noise textures.",
 };
 
