@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { Download, ArrowRight, Palette, Scaling, Sparkles } from "lucide-react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import confetti from "canvas-confetti";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PreviewCanvas from "@/components/PreviewCanvas";
@@ -49,6 +50,12 @@ function ColorGenerator() {
   }, [color, width, height, noise, pathname, router, searchParams]);
 
   const handleDownload = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: [color, '#ffffff']
+    });
     downloadSolidColor(color, width, height, noise);
   };
 
@@ -77,11 +84,11 @@ function ColorGenerator() {
         <Header />
       </div>
       
-      <main className="relative z-10 flex-1 flex flex-col lg:grid lg:grid-cols-[1.3fr,1fr] lg:gap-16 lg:items-start lg:max-w-7xl lg:mx-auto lg:p-12 lg:px-16 lg:w-full min-h-0">
+      <main className="relative z-10 flex-1 flex flex-col lg:grid lg:grid-cols-[1.3fr,1fr] lg:gap-10 lg:items-start lg:max-w-7xl lg:mx-auto lg:p-8 lg:px-12 lg:w-full min-h-0">
         
         {/* Left: Preview Section */}
         {/* Mobile: Fixed top area. Desktop: Sticky sidebar */}
-        <section className="shrink-0 basis-[45%] md:basis-[42%] lg:basis-auto relative z-0 flex flex-col items-center justify-center lg:sticky lg:top-32 lg:min-h-[60vh] p-4 lg:p-0">
+        <section className="shrink-0 basis-[45%] md:basis-[42%] lg:basis-auto relative z-0 flex flex-col items-center justify-center lg:sticky lg:top-24 lg:min-h-[60vh] p-4 lg:p-0">
           <div className="relative w-full h-full lg:h-auto lg:aspect-square max-w-[85%] lg:max-w-xl perspective-1000 flex items-center justify-center">
              <PreviewCanvas color={color} width={width} height={height} noise={noise} />
           </div>
@@ -118,7 +125,7 @@ function ColorGenerator() {
              {/* Mobile Handle (Hidden when tabs are present to save space) */}
             <div className="lg:hidden w-12 h-1.5 bg-gray-200 dark:bg-gray-700/50 rounded-full mx-auto mb-4 hidden" />
 
-            <div className="space-y-6 lg:space-y-10 pb-6 lg:pb-0">
+            <div className="space-y-6 lg:space-y-10 pb-32 lg:pb-0">
               {/* Desktop: Show all. Mobile: Show active tab */}
               <div className={`${activeTab === 'color' ? 'block' : 'hidden'} lg:block animate-in fade-in slide-in-from-bottom-2 duration-300 lg:animate-none`}>
                 <ColorPicker color={color} onChange={setColor} />

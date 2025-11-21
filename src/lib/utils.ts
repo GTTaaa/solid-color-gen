@@ -85,7 +85,7 @@ export const ALL_PRESETS = {
 };
 
 export const PRESET_SIZES = [
-  { label: 'iPhone', width: 1170, height: 2532 },     // Mobile
+  { label: 'Phone', width: 1170, height: 2532 },     // Mobile
   { label: 'Story', width: 1080, height: 1920 },      // Social Media Vertical
   { label: 'Square', width: 1080, height: 1080 },     // Social Media Square
   { label: 'Desktop', width: 1920, height: 1080 },    // Desktop / Video

@@ -1,6 +1,7 @@
 import { ALL_PRESETS, getRandomHex } from "@/lib/utils";
-import { Shuffle, Copy, Check, Pipette } from "lucide-react";
+import { Copy, Check, Pipette, Dices } from "lucide-react";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ColorPickerProps {
   color: string;
@@ -18,21 +19,14 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
   };
 
   return (
-    <div className="space-y-5 lg:space-y-7">
+    <div className="space-y-4 lg:space-y-5">
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wide uppercase">
           Color Control
         </label>
-        <button
-          onClick={() => onChange(getRandomHex())}
-          className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
-        >
-          <Shuffle className="w-3.5 h-3.5 text-gray-600 dark:text-gray-300 group-hover:rotate-180 transition-transform duration-500" />
-          <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Random</span>
-        </button>
       </div>
 
-      <div className="flex flex-col gap-5 lg:gap-6">
+      <div className="flex flex-col gap-4 lg:gap-5">
         {/* Input and Color Picker */}
         <div className="flex gap-4">
           <div className="relative flex-1 group">
@@ -57,22 +51,56 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
                   onChange(`#${val}`);
                 }
               }}
-              className="w-full pl-14 pr-12 py-3 lg:py-4 border border-gray-200 dark:border-gray-700 rounded-2xl bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10 focus:border-gray-300 dark:focus:border-gray-600 transition-all font-mono text-lg font-medium uppercase tracking-widest text-gray-900 dark:text-white placeholder-gray-400"
+              className="w-full pl-14 pr-12 py-2 lg:py-3 border border-gray-200 dark:border-gray-700 rounded-2xl bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10 focus:border-gray-300 dark:focus:border-gray-600 transition-all font-mono text-lg font-medium uppercase tracking-widest text-gray-900 dark:text-white placeholder-gray-400"
               placeholder="#000000"
             />
-            <button
-              onClick={handleCopy}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-xl hover:bg-white dark:hover:bg-gray-700 transition-all duration-200"
-              title="Copy Hex Code"
-            >
-              {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-            </button>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
+              <AnimatePresence>
+                {copied && (
+                  <motion.span
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    className="mr-2 text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded-md hidden sm:block"
+                  >
+                    Copied!
+                  </motion.span>
+                )}
+              </AnimatePresence>
+              <button
+                onClick={handleCopy}
+                className="p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-xl hover:bg-white dark:hover:bg-gray-700 transition-all duration-200"
+                title="Copy Hex Code"
+              >
+                <AnimatePresence mode="wait">
+                  {copied ? (
+                    <motion.div
+                      key="check"
+                      initial={{ scale: 0.5, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.5, opacity: 0 }}
+                    >
+                      <Check className="w-4 h-4 text-green-500" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="copy"
+                      initial={{ scale: 0.5, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.5, opacity: 0 }}
+                    >
+                      <Copy className="w-4 h-4" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Presets */}
         <div>
-          <div className="flex items-center gap-2 mb-3 overflow-x-auto pb-1 scrollbar-hide">
+          <div className="flex items-center gap-2 mb-2 overflow-x-auto pb-1 scrollbar-hide">
             {(Object.keys(ALL_PRESETS) as Array<keyof typeof ALL_PRESETS>).map((key) => (
               <button
                 key={key}
@@ -88,12 +116,23 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
             ))}
           </div>
           
-          <div className="grid grid-cols-6 sm:grid-cols-8 gap-3">
+          <div className="grid grid-cols-6 sm:grid-cols-8 gap-2">
+            {/* Random Button at start of grid */}
+            <button
+              onClick={() => onChange(getRandomHex())}
+              className="group relative aspect-square rounded-xl transition-all duration-300 focus:outline-none bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700"
+              title="Random Color"
+            >
+              <Dices className="w-5 h-5 text-gray-500 group-hover:rotate-180 transition-transform duration-500" />
+            </button>
+
             {ALL_PRESETS[activePreset].colors.map((c) => (
               <button
                 key={c}
                 onClick={() => onChange(c)}
-                className="group relative aspect-square rounded-xl transition-all duration-300 focus:outline-none"
+                className={`group relative aspect-square rounded-xl transition-all duration-300 focus:outline-none ${
+                  color.toLowerCase() === c.toLowerCase() ? 'ring-2 ring-offset-2 ring-gray-900 dark:ring-white dark:ring-offset-[#111]' : ''
+                }`}
                 aria-label={`Select color ${c}`}
               >
                 <div 

@@ -17,7 +17,7 @@ export default function NoiseControl({ value, onChange }: NoiseControlProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wide uppercase flex items-center gap-2">
           <Sparkles className="w-4 h-4" />
@@ -39,13 +39,13 @@ export default function NoiseControl({ value, onChange }: NoiseControlProps) {
       </div>
       
       <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isEnabled ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-1">
            <span className="text-xs font-medium text-gray-400">Intensity</span>
            <span className="text-xs font-mono font-semibold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-center min-w-[3ch]">
             {value}%
           </span>
         </div>
-        <div className="relative h-10 flex items-center group">
+        <div className="relative h-8 flex items-center group">
           <input
             type="range"
             min="1"
